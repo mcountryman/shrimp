@@ -12,7 +12,7 @@ impl AppState {
   pub async fn new(opts: &AppOpts) -> Result<Self, Box<dyn Error>> {
     Ok(
       Self {
-        shorten: ShortenService::new(opts.database.as_str()).await?
+        shorten: ShortenService::new(opts.redis_url.as_str()).await?
       }
     )
   }
