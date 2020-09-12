@@ -29,7 +29,7 @@ async fn main() -> std::io::Result<()> {
           .configure(config_shorten)
       )
   })
-    .bind(format!("127.0.0.1:{}", opts.port))?
+    .bind(format!("0.0.0.0:{}", opts.port))?
     .run()
     .await
 }
