@@ -1,0 +1,11 @@
+{
+  "name": "shrimp",
+  "description": "",
+  "repository": "https://github.com/mcountryman/shrimp",
+  "success_url": "/",
+  "keywords": ["rust", "actix"],
+  "website": "https://github.com/mcountryman/shrimp",
+  "env": {
+    "BUILDPACK_URL": "https://github.com/emk/heroku-buildpack-rust.git"
+  }
+}

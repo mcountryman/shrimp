@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated />
   </component>
@@ -12,7 +30,11 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="df010fee-4cdd-45a9-af9e-f44a4d5ceb2d" name="Default Changelist" comment="" />
+    <list default="true" id="df010fee-4cdd-45a9-af9e-f44a4d5ceb2d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/opts.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/opts.rs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,18 +79,12 @@
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="language.rust.cargo" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
   <component name="RunManager">
-    <configuration default="true" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
-      <option name="channel" value="DEFAULT" />
-      <option name="command" value="run" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="run" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="channel" value="DEFAULT" />
       <option name="command" value="run --package shrimp --bin shrimp" />
@@ -102,38 +118,53 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1599882733753</updated>
-      <workItem from="1599882736132" duration="14163000" />
+      <workItem from="1599882736132" duration="16917000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="WindowStateProjectService">
     <state x="0" y="282" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599885049179">
       <screen x="0" y="23" width="2048" height="1208" />
     </state>
     <state x="0" y="282" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.2048.1208@0.23.2048.1208" timestamp="1599885049179" />
+    <state x="243" y="429" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1599933523311">
+      <screen x="0" y="23" width="2048" height="1208" />
+    </state>
+    <state x="243" y="429" key="#com.intellij.fileTypes.FileTypeChooser/0.23.2048.1208@0.23.2048.1208" timestamp="1599933523311" />
     <state x="332" y="343" key="#com.intellij.ide.util.MemberChooser" timestamp="1599930488201">
       <screen x="0" y="23" width="2048" height="1208" />
     </state>
     <state x="332" y="343" key="#com.intellij.ide.util.MemberChooser/0.23.2048.1208@0.23.2048.1208" timestamp="1599930488201" />
-    <state width="985" height="328" key="GridCell.Tab.0.bottom" timestamp="1599932630223">
+    <state width="985" height="328" key="GridCell.Tab.0.bottom" timestamp="1599933819753">
       <screen x="0" y="23" width="2048" height="1208" />
     </state>
-    <state width="985" height="328" key="GridCell.Tab.0.bottom/0.23.2048.1208@0.23.2048.1208" timestamp="1599932630223" />
-    <state width="985" height="328" key="GridCell.Tab.0.center" timestamp="1599932630222">
+    <state width="985" height="328" key="GridCell.Tab.0.bottom/0.23.2048.1208@0.23.2048.1208" timestamp="1599933819753" />
+    <state width="985" height="328" key="GridCell.Tab.0.center" timestamp="1599933819752">
       <screen x="0" y="23" width="2048" height="1208" />
     </state>
-    <state width="985" height="328" key="GridCell.Tab.0.center/0.23.2048.1208@0.23.2048.1208" timestamp="1599932630222" />
-    <state width="985" height="328" key="GridCell.Tab.0.left" timestamp="1599932630222">
+    <state width="985" height="328" key="GridCell.Tab.0.center/0.23.2048.1208@0.23.2048.1208" timestamp="1599933819752" />
+    <state width="985" height="328" key="GridCell.Tab.0.left" timestamp="1599933819752">
       <screen x="0" y="23" width="2048" height="1208" />
     </state>
-    <state width="985" height="328" key="GridCell.Tab.0.left/0.23.2048.1208@0.23.2048.1208" timestamp="1599932630222" />
-    <state width="985" height="328" key="GridCell.Tab.0.right" timestamp="1599932630223">
+    <state width="985" height="328" key="GridCell.Tab.0.left/0.23.2048.1208@0.23.2048.1208" timestamp="1599933819752" />
+    <state width="985" height="328" key="GridCell.Tab.0.right" timestamp="1599933819753">
       <screen x="0" y="23" width="2048" height="1208" />
     </state>
-    <state width="985" height="328" key="GridCell.Tab.0.right/0.23.2048.1208@0.23.2048.1208" timestamp="1599932630223" />
+    <state width="985" height="328" key="GridCell.Tab.0.right/0.23.2048.1208@0.23.2048.1208" timestamp="1599933819753" />
     <state width="985" height="404" key="GridCell.Tab.1.bottom" timestamp="1599932597694">
       <screen x="0" y="23" width="2048" height="1208" />
     </state>
