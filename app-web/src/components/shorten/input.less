@@ -1,0 +1,71 @@
+@import "../../theme/colors/_import";
+
+@height: 50px;
+
+.container {
+  // dimensions
+  width: 100%;
+  height: @height;
+
+  // child dimensions
+  display: flex;
+  flex-direction: row;
+
+  &:hover {
+    .input { flex-grow: 7; }
+    .button {
+      flex-grow: 2;
+      color: var(--shr-color);
+      background: var(--shr-primary-background);
+    }
+  }
+}
+
+.input {
+  // dimensions
+  height: 100%;
+  border: 0;
+  padding: 0 10px;
+  flex-grow: 8;
+  border-radius: 2px 0 0 2px;
+
+  // colors
+  color: var(--shr-inverse-color);
+  background: var(--shr-muted-background);
+}
+
+.button {
+  // dimensions
+  flex-grow: 1;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  border-radius: 0 2px 2px 0;
+
+  // colors
+  color: var(--shr-inverse-color);
+  background: var(--shr-muted-background);
+  box-shadow: inset 1px 0 rgba(0, 0, 0, 0.1);
+
+  &:disabled {
+    color: var(--shr-muted-color);
+    background: var(--shr-muted-background);
+  }
+
+  &:active {
+    border: 0;
+  }
+
+  &:hover {
+  }
+
+  transition: background-color, color, flex-grow;
+  transition-duration: 50ms;
+  transition-timing-function: ease-in;
+}
+
+.input, .button {
+  &:focus {
+    outline: none;
+  }
+}

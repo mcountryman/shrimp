@@ -1,12 +1,13 @@
 import React from "react";
-import ShortenInput from "../components/shorten_input";
+import ShortenInput from "../components/shorten/input";
 
-import "./index.less";
+// @ts-ignore
+import styles from "./index.less";
 
 export default function IndexPage(): JSX.Element {
   return (
-    <div className="shrimp-content">
-      <div>
+    <div className={styles.container}>
+      <div className={styles.inputContainer}>
         <ShortenInput/>
       </div>
     </div>

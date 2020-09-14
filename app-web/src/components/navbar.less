@@ -1,8 +1,21 @@
+@import "../theme/_import";
 
-nav {
+.nav {
+  // location
   grid-area: navbar;
 
-  .uk-navbar-right {
-    margin-right: 10px;
-  }
+  // flex
+  display: flex;
+  flex-direction: column;
+
+  // children
+  margin: 20px;
+}
+
+.toolbarRight {
+  align-self: end;
+}
+
+.toolbarLeft {
+  align-self: start;
 }
