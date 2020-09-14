@@ -1,19 +1,2 @@
-[package]
-name = "shrimp"
-version = "0.1.0"
-authors = ["Marvin Countryman <me@maar.vin>"]
-edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
-clap = "3.0.0-beta.1"
-rand = '0.7.3'
-bb8 = "0.4.2"
-bb8-redis = "0.5.0"
-serde = { version = "1.0.116", features = ["derive"] }
-tokio = { version = "0.2.22", features = ["blocking"] }
-futures = "0.3.5"
-actix-rt = "1.1.1"
-actix-web = "3.0.0"
-actix-service = "1.0.6"
+[workspace]
+members = ["app"]

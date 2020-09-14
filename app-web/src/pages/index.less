@@ -1,0 +1,17 @@
+
+.shrimp-content {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 120px auto 120px;
+  grid-template-rows: auto 60px 120px;
+  grid-template-areas:
+      "left logo right"
+      "input input input"
+      "empty empty empty";
+
+  div {
+    margin: auto;
+    grid-area: input;
+  }
+}
