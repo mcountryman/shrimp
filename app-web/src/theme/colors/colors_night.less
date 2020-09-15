@@ -1,33 +1,48 @@
+@shr-dark-primary: #DC5E43;
+@shr-dark-secondary: #81DBBB;
+@shr-dark-success: #32d296;
+@shr-dark-warning: #faa05a;
+@shr-dark-danger: #f0506e;
+@shr-dark-light: #222222;
+@shr-dark-dark: #d4d4d4;
 
 :root {
   //
   // Colors
   //
-  --shr-color: #d4d4d4;
-  --shr-emphasis-color:       #333;
-  --shr-muted-color:          #999;
+  --shr-color:          @shr-dark-dark;
+  --shr-muted-color:    lighten(@shr-dark-dark, 5%);
+  --shr-emphasis-color: lighten(@shr-dark-dark, 5%);
 
-  --shr-link-color:           #1e87f0;
-  --shr-link-hover-color:     #0f6ecd;
+  --shr-primary-color: lighten(@shr-dark-primary, 40%);
 
-  --shr-inverse-color:        #a7a7a7;
+  --shr-link-color: #1e87f0;
+  --shr-link-hover-color: #0f6ecd;
+
+  --shr-inverse-color: @shr-dark-light;
 
   //
   // Backgrounds
   //
-  --shr-background:           #222;
+  --shr-background: @shr-dark-light;
+  --shr-muted-background: lighten(@shr-dark-light, 3%);
+  --shr-emphasis-background: lighten(@shr-dark-light, 5%);
 
-  --shr-muted-background:     lighten(#222, 5%);
-  --shr-primary-background:   rgb(220, 94, 67);
-  --shr-secondary-background: #222;
+  --shr-primary-background: @shr-dark-primary;
+  --shr-primary-muted-background: lighten(@shr-dark-primary, 5%);
+  --shr-primary-emphasis-background: lighten(@shr-dark-primary, 5%);
 
-  --shr-success-background:   #32d296;
-  --shr-warning-background:   #faa05a;
-  --shr-danger-background:    #f0506e;
+  --shr-secondary-background: @shr-dark-secondary;
+  --shr-secondary-muted-background: lighten(@shr-dark-secondary, 5%);
+  --shr-secondary-emphasis-background: lighten(@shr-dark-secondary, 5%);
+
+  --shr-success-background: @shr-dark-success;
+  --shr-warning-background: @shr-dark-warning;
+  --shr-danger-background: @shr-dark-danger;
 
   //
   // Borders
   //
-  --shr-border-width:         1px;
-  --shr-border:               #e5e5e5;
+  --shr-border-width: 1px;
+  --shr-border: #e5e5e5;
 }

@@ -13,5 +13,10 @@ module.exports = withLess({
     sourceMap: true,
     importLoaders: 1,
     localIdentName: "[local]-[hash:base64:5]",
+    postcssLoaderOptions: {
+      plugins: [
+        require("cssnano")({ preset: "advanced" })
+      ]
+    }
   }
 });

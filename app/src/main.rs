@@ -1,12 +1,17 @@
-use actix_web::{App, HttpServer, web};
+use std::borrow::Cow;
+
+use actix_web::{App, HttpResponse, HttpServer, web};
+use actix_web::body::Body;
+use actix_web::middleware::DefaultHeaders;
 use clap::Clap;
 
 use crate::opts::AppOpts;
 use crate::short::handler::config_shorten;
 use crate::short::middleware::Shorten;
 use crate::state::AppState;
-use actix_web::middleware::DefaultHeaders;
+use crate::app::config_app;
 
+mod app;
 mod opts;
 mod short;
 mod state;
@@ -24,10 +29,8 @@ async fn main() -> std::io::Result<()> {
       .wrap(DefaultHeaders::new()
         .header("Access-Control-Allow-Origin", "*")
       )
-      .service(
-        web::scope("/api")
-          .configure(config_shorten)
-      )
+      .service(web::scope("/api").configure(config_shorten))
+      .service(web::scope("/").configure(config_app))
   })
     .bind(format!("0.0.0.0:{}", opts.port))?
     .run()
