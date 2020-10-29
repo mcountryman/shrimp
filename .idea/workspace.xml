@@ -31,9 +31,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df010fee-4cdd-45a9-af9e-f44a4d5ceb2d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/yarn.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/app.rs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/yarn.rs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +126,8 @@
       <updated>1599882733753</updated>
       <workItem from="1599882736132" duration="30466000" />
       <workItem from="1600088919886" duration="29459000" />
-      <workItem from="1603975446806" duration="298000" />
+      <workItem from="1603975446806" duration="2089000" />
+      <workItem from="1603981710679" duration="15000" />
     </task>
     <servers />
   </component>
@@ -149,9 +151,10 @@
       <screen x="0" y="0" width="3440" height="1410" />
     </state>
     <state x="452" y="349" key="#Plugins/0.0.3440.1410@0.0.3440.1410" timestamp="1600095804864" />
-    <state x="0" y="282" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599937152310">
-      <screen x="0" y="23" width="2048" height="1208" />
+    <state x="968" y="467" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1603981722658">
+      <screen x="0" y="0" width="2560" height="1409" />
     </state>
+    <state x="968" y="467" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1600.1254.1600.854/0.0.2560.1409@0.0.2560.1409" timestamp="1603981722658" />
     <state x="0" y="282" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.2048.1208@0.23.2048.1208" timestamp="1599937152310" />
     <state x="408" y="474" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600092025893">
       <screen x="0" y="0" width="3440" height="1410" />

@@ -1,21 +1,17 @@
-use std::cell::RefCell;
 use std::pin::Pin;
 use std::rc::Rc;
 use std::task::{Context, Poll};
+use std::{cell::RefCell, sync::Arc};
 
 use actix_service::{Service, Transform};
-use actix_web::{
-  dev::ServiceRequest,
-  dev::ServiceResponse,
-  Error,
-  http,
-  HttpResponse,
-};
+use actix_web::{dev::ServiceRequest, dev::ServiceResponse, http, Error, HttpResponse};
 use futures::future::{ok, Ready};
 use futures::Future;
 
 use crate::short::service::{URL_CHARACTERS, URL_IDEAL_LENGTH};
 use crate::state::AppState;
+
+use super::service::get_url;
 
 // There are two steps in middleware processing.
 // 1. Middleware initialization, middleware factory gets called with
@@ -27,10 +23,10 @@ pub struct Shorten;
 // `S` - type of the next service
 // `B` - type of response's body
 impl<S: 'static, B> Transform<S> for Shorten
-  where
-    S: Service<Request=ServiceRequest, Response=ServiceResponse<B>, Error=Error>,
-    S::Future: 'static,
-    B: 'static,
+where
+  S: Service<Request = ServiceRequest, Response = ServiceResponse<B>, Error = Error>,
+  S::Future: 'static,
+  B: 'static,
 {
   type Request = ServiceRequest;
   type Response = ServiceResponse<B>;
@@ -41,7 +37,7 @@ impl<S: 'static, B> Transform<S> for Shorten
 
   fn new_transform(&self, service: S) -> Self::Future {
     ok(ShortenMiddleware {
-      service: Rc::new(RefCell::new(service))
+      service: Rc::new(RefCell::new(service)),
     })
   }
 }
@@ -81,7 +77,9 @@ impl<S> ShortenMiddleware<S> {
         ate_trailing_slashes = true;
       }
 
-      if ate_trailing_slashes { return None; }
+      if ate_trailing_slashes {
+        return None;
+      }
       if URL_CHARACTERS.contains(&(ch as u8)) {
         short_url.push(ch);
         continue;
@@ -98,13 +96,13 @@ impl<S> ShortenMiddleware<S> {
   }
 }
 
-type ShortenFuture<A, B>= Pin<Box<dyn Future<Output=Result<A, B>>>>;
+type ShortenFuture<A, B> = Pin<Box<dyn Future<Output = Result<A, B>>>>;
 
 impl<S: 'static, B> Service for ShortenMiddleware<S>
-  where
-    S: Service<Request=ServiceRequest, Response=ServiceResponse<B>, Error=Error>,
-    S::Future: 'static,
-    B: 'static
+where
+  S: Service<Request = ServiceRequest, Response = ServiceResponse<B>, Error = Error>,
+  S::Future: 'static,
+  B: 'static,
 {
   type Request = ServiceRequest;
   type Response = ServiceResponse<B>;
@@ -122,10 +120,9 @@ impl<S: 'static, B> Service for ShortenMiddleware<S>
     }
 
     Box::pin(async move {
-      let state = req.app_data::<AppState>().unwrap();
-      let shorten = &state.shorten;
+      let state = req.app_data::<Arc<AppState>>().unwrap();
       let short_url = short_url.unwrap();
-      let redirect = shorten.get_url(short_url.as_str()).await?;
+      let redirect = get_url(&state.pool, short_url.as_str()).await?;
       let redirect = HttpResponse::TemporaryRedirect()
         .header(http::header::LOCATION, redirect)
         .finish()

@@ -1,11 +1,30 @@
+use dotenv::dotenv;
+use std::env;
 
-use clap::Clap;
-
-#[derive(Clap, Clone)]
+#[derive(Clone)]
 pub struct AppOpts {
-  #[clap(short, long, env = "PORT", default_value = "8080")]
   pub port: u16,
-
-  #[clap(short, long, env = "REDIS_URL")]
+  pub web_url: String,
   pub redis_url: String,
+}
+
+impl AppOpts {
+  pub fn parse() -> Self {
+    dotenv().ok();
+
+    Self {
+      port: env::var("PORT")
+        .unwrap_or("8080".to_owned())
+        .parse()
+        .expect("Invalid `PORT` environment variable."),
+
+      web_url: env::var("WEB_URL")
+        .expect("Missing `WEB_URL` environment variable.")
+        .to_owned(),
+
+      redis_url: env::var("REDIS_URL")
+        .expect("Missing `REDIS_URL` environment variable.")
+        .to_owned(),
+    }
+  }
 }
