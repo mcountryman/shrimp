@@ -1,7 +1,6 @@
 use std::borrow::Cow;
 
-use actix_web::{App, HttpResponse, HttpServer, web};
-use actix_web::body::Body;
+use actix_web::{App, HttpResponse, HttpServer, web, http};
 use actix_web::middleware::DefaultHeaders;
 use clap::Clap;
 
@@ -9,7 +8,6 @@ use crate::opts::AppOpts;
 use crate::short::handler::config_shorten;
 use crate::short::middleware::Shorten;
 use crate::state::AppState;
-use crate::app::config_app;
 
 mod app;
 mod opts;
@@ -30,9 +28,15 @@ async fn main() -> std::io::Result<()> {
         .header("Access-Control-Allow-Origin", "*")
       )
       .service(web::scope("/api").configure(config_shorten))
-      .service(web::scope("/").configure(config_app))
+      .route("{_:.*}", web::get().to(redirect))
   })
     .bind(format!("0.0.0.0:{}", opts.port))?
     .run()
     .await
+}
+
+async fn redirect(path: web::Path<String>) -> HttpResponse {
+  HttpResponse::PermanentRedirect()
+    .header(http::header::LOCATION, format!("https://www.shr1.mp/{}", path))
+    .finish()
 }
