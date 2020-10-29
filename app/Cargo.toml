@@ -13,6 +13,7 @@ bb8-redis = "0.5.0"
 serde = { version = "1.0.116", features = ["derive"] }
 
 # log
+log = "0.4"
 logfmt_logger = "0.1"
 
 # config
@@ -23,9 +24,11 @@ tokio = { version = "0.2.22", features = ["blocking"] }
 futures = "0.3.5"
 
 # http
-actix-rt = "1.1.1"
-actix-web = "3.0.0"
-actix-service = "1.0.6"
+actix-rt = "1.1"
+actix-web = "3.0"
+actix-cors = "0.5"
+actix-service = "1.0"
+tinyvec = { version = "1.0", features = ["alloc"] }
 
 [dev-dependencies]
 listenfd = "0.3.3"

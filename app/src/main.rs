@@ -1,7 +1,15 @@
+#[macro_use]
+extern crate log;
+
 use std::sync::Arc;
 
-use actix_web::middleware::{DefaultHeaders, Logger};
-use actix_web::{http, web, App, HttpResponse, HttpServer};
+use actix_web::{
+  http::header::LOCATION,
+  middleware::{DefaultHeaders, Logger},
+  web, App, HttpResponse, HttpServer,
+};
+
+use actix_cors::Cors;
 
 use crate::opts::AppOpts;
 use crate::short::handler::config_shorten;
@@ -15,19 +23,30 @@ mod state;
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
   let opts = AppOpts::parse();
-  let port = opts.port;
-  let state = Arc::new(AppState::new(opts).await.unwrap());
 
   logfmt_logger::init();
+
+  let state = Arc::new(AppState::new(opts.clone()).await.unwrap());
+  let port = opts.port;
+  let web_url = opts.web_url;
 
   HttpServer::new(move || {
     App::new()
       .data(state.clone())
       .app_data(state.clone())
+      .wrap(
+        Cors::default()
+          .allowed_origin(&web_url)
+          .allow_any_method()
+          .allow_any_header()
+          .max_age(3600),
+      )
       .wrap(Logger::default())
       .wrap(Shorten)
-      .wrap(DefaultHeaders::new().header("Access-Control-Allow-Origin", "*"))
-      .service(web::scope("/api").configure(config_shorten))
+      .service(
+        web::scope("api") //
+          .configure(config_shorten),
+      )
       .route("{_:.*}", web::get().to(redirect))
   })
   .bind(format!("0.0.0.0:{}", port))?
@@ -37,9 +56,6 @@ async fn main() -> std::io::Result<()> {
 
 async fn redirect(path: web::Path<String>, state: web::Data<Arc<AppState>>) -> HttpResponse {
   HttpResponse::PermanentRedirect()
-    .header(
-      http::header::LOCATION,
-      format!("{}{}", &state.opts.web_url, path),
-    )
+    .header(LOCATION, format!("{}{}", &state.opts.web_url, path))
     .finish()
 }

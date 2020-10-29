@@ -80,6 +80,7 @@ impl<S> ShortenMiddleware<S> {
       if ate_trailing_slashes {
         return None;
       }
+
       if URL_CHARACTERS.contains(&(ch as u8)) {
         short_url.push(ch);
         continue;
@@ -122,7 +123,9 @@ where
     Box::pin(async move {
       let state = req.app_data::<Arc<AppState>>().unwrap();
       let short_url = short_url.unwrap();
+      info!("Test short {}", short_url);
       let redirect = get_url(&state.pool, short_url.as_str()).await?;
+      info!("Got long {}", redirect);
       let redirect = HttpResponse::TemporaryRedirect()
         .header(http::header::LOCATION, redirect)
         .finish()

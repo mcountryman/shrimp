@@ -5,6 +5,7 @@ use std::env;
 pub struct AppOpts {
   pub port: u16,
   pub web_url: String,
+  pub app_url: String,
   pub redis_url: String,
 }
 
@@ -20,6 +21,10 @@ impl AppOpts {
 
       web_url: env::var("WEB_URL")
         .expect("Missing `WEB_URL` environment variable.")
+        .to_owned(),
+
+      app_url: env::var("NEXT_PUBLIC_APP_URL")
+        .expect("Missing `NEXT_PUBLIC_APP_URL` environment variable.")
         .to_owned(),
 
       redis_url: env::var("REDIS_URL")

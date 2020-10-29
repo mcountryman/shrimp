@@ -22,14 +22,20 @@ pub enum ShortenErr {
 pub async fn add_url(pool: &RedisPool, long_url: &str) -> Result<String, ShortenErr> {
   let mut extra = 0usize;
 
+  info!("add_url(\"{}\")", long_url);
+
   loop {
     for _ in 0..URL_IDEAL_RETRIES {
       let short_url = get_short_url(extra);
       let short_url = short_url.as_str();
       let is_unique = try_push_url(&pool, short_url, long_url).await?;
       if is_unique {
+        info!("is_unique = true");
         return Ok(short_url.to_owned());
       }
+
+      info!("short_url = \"{}\"", short_url);
+      info!("is_unique = false");
     }
 
     extra += 1;
@@ -37,6 +43,8 @@ pub async fn add_url(pool: &RedisPool, long_url: &str) -> Result<String, Shorten
 }
 
 pub async fn get_url(pool: &RedisPool, short_url: &str) -> Result<String, ShortenErr> {
+  info!("get_url(\"{}\")", short_url);
+
   let mut conn = pool.get().await?;
   let conn = conn.as_mut().unwrap();
   let long_url: String = conn.hget(URL_KEY, short_url).await?;
