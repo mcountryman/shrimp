@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use actix_web::middleware::DefaultHeaders;
+use actix_web::middleware::{DefaultHeaders, Logger};
 use actix_web::{http, web, App, HttpResponse, HttpServer};
 
 use crate::opts::AppOpts;
@@ -18,10 +18,13 @@ async fn main() -> std::io::Result<()> {
   let port = opts.port;
   let state = Arc::new(AppState::new(opts).await.unwrap());
 
+  logfmt_logger::init();
+
   HttpServer::new(move || {
     App::new()
       .data(state.clone())
       .app_data(state.clone())
+      .wrap(Logger::default())
       .wrap(Shorten)
       .wrap(DefaultHeaders::new().header("Access-Control-Allow-Origin", "*"))
       .service(web::scope("/api").configure(config_shorten))

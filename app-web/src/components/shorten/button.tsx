@@ -1,4 +1,4 @@
-import React, {createRef} from "react";
+import React, { createRef } from "react";
 // @ts-ignore
 import styles from "./input.less";
 
@@ -47,7 +47,7 @@ function onSubmit(link: string) {
         result.push(ch);
       }
 
-      resolve("https://f.maar.vin/" + result.join(""));
+      resolve(process.env.NEXT_PUBLIC_APP_URL + " " + result.join(""));
     }, Math.random() * 1000);
   });
   // return fetch("http://f.maar.vin/api/shorten", {
