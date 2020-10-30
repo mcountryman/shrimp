@@ -1,28 +1,31 @@
-use std::error::Error;
-use std::fmt;
-use std::fmt::{Display, Formatter};
-
-use actix_web::ResponseError;
-use bb8::RunError;
-use bb8_redis::redis::{AsyncCommands, RedisError};
+use bb8_redis::redis::AsyncCommands;
 use bb8_redis::{redis, RedisPool};
 use rand::{thread_rng, Rng};
+use regex::Regex;
 
-pub const URL_KEY: &str = "urls";
-pub const URL_CHARACTERS: &[u8] = b"abcdefghijklmnopqrstuvwxyz";
-pub const URL_IDEAL_LENGTH: usize = 5;
-pub const URL_IDEAL_RETRIES: u32 = 3;
+use crate::opts::AppOpts;
 
-#[derive(Debug)]
-pub enum ShortenErr {
-  Redis(RedisError),
-  RunError(RunError<RedisError>),
-}
+use super::{
+  error::ShortenErr, validate::validate_scheme, URL_CHARACTERS, URL_IDEAL_LENGTH,
+  URL_IDEAL_RETRIES, URL_KEY,
+};
 
-pub async fn add_url(pool: &RedisPool, long_url: &str) -> Result<String, ShortenErr> {
+/// Gets short url path for supplied url.
+/// 
+/// # Arguments
+/// * `pool` - The redis pull to insert shortened urls into.
+/// * `valid_scheme` - The regex used for validating uri scheme.
+/// * `long_url` - The url to shorten.
+pub async fn get_short_path(
+  pool: &RedisPool,
+  valid_scheme: &Regex,
+  long_url: &str,
+) -> Result<String, ShortenErr> {
   let mut extra = 0usize;
 
   info!("add_url(\"{}\")", long_url);
+
+  validate_scheme(&valid_scheme, long_url)?;
 
   loop {
     for _ in 0..URL_IDEAL_RETRIES {
@@ -42,7 +45,7 @@ pub async fn add_url(pool: &RedisPool, long_url: &str) -> Result<String, Shorten
   }
 }
 
-pub async fn get_url(pool: &RedisPool, short_url: &str) -> Result<String, ShortenErr> {
+pub async fn to_long(pool: &RedisPool, short_url: &str) -> Result<String, ShortenErr> {
   info!("get_url(\"{}\")", short_url);
 
   let mut conn = pool.get().await?;
@@ -77,25 +80,3 @@ async fn try_push_url(
 
   Ok(code > 0)
 }
-
-impl Display for ShortenErr {
-  fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-    write!(f, "{:?}", self)
-  }
-}
-
-impl From<RedisError> for ShortenErr {
-  fn from(err: RedisError) -> Self {
-    ShortenErr::Redis(err)
-  }
-}
-
-impl From<RunError<RedisError>> for ShortenErr {
-  fn from(err: RunError<RedisError>) -> Self {
-    ShortenErr::RunError(err)
-  }
-}
-
-impl Error for ShortenErr {}
-
-impl ResponseError for ShortenErr {}

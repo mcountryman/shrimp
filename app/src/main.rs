@@ -4,9 +4,7 @@ extern crate log;
 use std::sync::Arc;
 
 use actix_web::{
-  http::header::LOCATION,
-  middleware::{DefaultHeaders, Logger},
-  web, App, HttpResponse, HttpServer,
+  http::header::LOCATION, middleware::Logger, web, App, HttpResponse, HttpServer,
 };
 
 use actix_cors::Cors;
@@ -34,17 +32,11 @@ async fn main() -> std::io::Result<()> {
     App::new()
       .data(state.clone())
       .app_data(state.clone())
-      .wrap(
-        Cors::default()
-          .allowed_origin(&web_url)
-          .allow_any_method()
-          .allow_any_header()
-          .max_age(3600),
-      )
+      .wrap(Cors::permissive())
       .wrap(Logger::default())
       .wrap(Shorten)
       .service(
-        web::scope("api") //
+        web::scope("/api") //
           .configure(config_shorten),
       )
       .route("{_:.*}", web::get().to(redirect))

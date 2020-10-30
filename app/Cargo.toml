@@ -25,10 +25,13 @@ futures = "0.3.5"
 
 # http
 actix-rt = "1.1"
-actix-web = "3.0"
+actix-web = "3.2"
 actix-cors = "0.5"
 actix-service = "1.0"
 tinyvec = { version = "1.0", features = ["alloc"] }
+
+# validation
+regex = "1.4"
 
 [dev-dependencies]
 listenfd = "0.3.3"

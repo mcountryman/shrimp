@@ -8,10 +8,10 @@ use actix_web::{dev::ServiceRequest, dev::ServiceResponse, http, Error, HttpResp
 use futures::future::{ok, Ready};
 use futures::Future;
 
-use crate::short::service::{URL_CHARACTERS, URL_IDEAL_LENGTH};
+use crate::short::{URL_CHARACTERS, URL_IDEAL_LENGTH};
 use crate::state::AppState;
 
-use super::service::get_url;
+use super::service::to_long;
 
 // There are two steps in middleware processing.
 // 1. Middleware initialization, middleware factory gets called with
@@ -123,9 +123,13 @@ where
     Box::pin(async move {
       let state = req.app_data::<Arc<AppState>>().unwrap();
       let short_url = short_url.unwrap();
+
       info!("Test short {}", short_url);
-      let redirect = get_url(&state.pool, short_url.as_str()).await?;
+
+      let redirect = to_long(&state.pool, short_url.as_str()).await?;
+
       info!("Got long {}", redirect);
+
       let redirect = HttpResponse::TemporaryRedirect()
         .header(http::header::LOCATION, redirect)
         .finish()

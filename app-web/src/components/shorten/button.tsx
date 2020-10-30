@@ -37,7 +37,10 @@ function onSubmit(link: string) {
 
   return fetch(urlcat(process.env.NEXT_PUBLIC_APP_URL, "api/shorten"), {
     body: JSON.stringify({ url: link }),
+    mode: "cors",
     method: "PUT",
+    headers: { "Content-Type": "application/json" }
   })
-    .then(res => res.text());
+    .then(res => res.text())
+    .then(short => urlcat(process.env.NEXT_PUBLIC_APP_URL, short));
 }

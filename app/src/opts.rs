@@ -1,4 +1,5 @@
 use dotenv::dotenv;
+use regex::Regex;
 use std::env;
 
 #[derive(Clone)]
@@ -7,6 +8,7 @@ pub struct AppOpts {
   pub web_url: String,
   pub app_url: String,
   pub redis_url: String,
+  pub valid_scheme: Regex,
 }
 
 impl AppOpts {
@@ -30,6 +32,11 @@ impl AppOpts {
       redis_url: env::var("REDIS_URL")
         .expect("Missing `REDIS_URL` environment variable.")
         .to_owned(),
+
+      valid_scheme: Regex::new(
+        &env::var("VALID_SCHEME").expect("Missing `VALID_SCHEMES` environment variable."),
+      )
+      .expect("Invalid regex in environment variable `VALID_SCHEMES`."),
     }
   }
 }
