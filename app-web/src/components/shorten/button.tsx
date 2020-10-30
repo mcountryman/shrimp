@@ -6,8 +6,7 @@ import styles from "./input.less";
 interface IShortenButtonProps {
   link: string,
   isShort: boolean,
-  onShortened: (shortened: string) => void;
-  onError: (ex: Error) => void;
+  onClick: () => void,
 }
 
 export default function ShortenButton(props: IShortenButtonProps) {
@@ -17,30 +16,12 @@ export default function ShortenButton(props: IShortenButtonProps) {
     <>
       <button
         ref={anchor}
-        disabled={props.isShort}
+        type="submit"
+        onClick={props.onClick}
         className={styles.button}
-        onClick={_ =>
-          onSubmit(props.link)
-            .then(props.onShortened)
-            .catch(props.onError)
-        }
       >
-        shrimpify
+        {props.isShort ? "copy to clipboard" : "shorten"}
       </button>
     </>
   );
-}
-
-function onSubmit(link: string) {
-  if (link.length === 0)
-    return Promise.reject("");
-
-  return fetch(urlcat(process.env.NEXT_PUBLIC_APP_URL, "api/shorten"), {
-    body: JSON.stringify({ url: link }),
-    mode: "cors",
-    method: "PUT",
-    headers: { "Content-Type": "application/json" }
-  })
-    .then(res => res.text())
-    .then(short => urlcat(process.env.NEXT_PUBLIC_APP_URL, short));
 }

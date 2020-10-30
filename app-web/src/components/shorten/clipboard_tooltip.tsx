@@ -1,4 +1,4 @@
-import {RefObject} from "react";
+import { RefObject } from "react";
 import useDimensions from "../../hooks/use_dimensions";
 
 interface IClipboardTooltipProps<TAnchor extends Element> {

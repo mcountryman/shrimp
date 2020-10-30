@@ -1,9 +1,6 @@
 import React from "react";
 import NavBar from "../components/navbar";
 
-import "uikit/dist/js/uikit";
-import "uikit/dist/js/uikit-icons";
-
 // @ts-ignore
 import style from "./_app.less";
 

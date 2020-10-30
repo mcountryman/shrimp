@@ -1,34 +1,71 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import ShortenButton from "./button";
 import ShortenTextBox from "./textbox";
 // @ts-ignore
 import styles from "./input.less";
+import urlcat from "urlcat";
 
 export default function ShortenInput() {
-  const [link, setLink] = useState("");
+  const [long, setLong] = useState("");
+  const [short, setShort] = useState("");
+  const [error, setError] = useState(null);
   const [isShort, setIsShort] = useState(false);
 
   return (
-    <div className={styles.container}>
+    <form
+      onSubmit={evt => {
+        evt.preventDefault();
+
+        shorten(long)
+          .then(short => {
+            setLong("");
+            setShort(short);
+            setIsShort(true);
+          })
+          .catch(ex => {
+            setError(ex);
+            setIsShort(false);
+          });
+      }}
+      className={styles.container}
+    >
       <ShortenTextBox
-        link={link}
+        long={long}
+        short={short}
         isShort={isShort}
         onChange={long => {
-          setLink(long);
+          setLong(long);
           setIsShort(false);
         }}
       />
 
       <ShortenButton
-        link={link}
+        link={long}
         isShort={isShort}
-        onError={console.error}
-        onShortened={short => {
-          setLink(short);
-          setIsShort(true);
-        }}
+        onClick={() => console.log("Test")}
       />
-    </div>
+    </form>
   );
 }
 
+async function shorten(link: string) {
+  if (link.length === 0) {
+    throw new Error("Invalid");
+  }
+
+  const res = await fetch(urlcat(process.env.NEXT_PUBLIC_APP_URL, "api/shorten"), {
+    body: JSON.stringify({ url: link }),
+    mode: "cors",
+    method: "PUT",
+    headers: { "Content-Type": "application/json" }
+  });
+
+  if (!res.ok) {
+    throw new Error(await res.text());
+  }
+
+
+  const path = await res.text();
+  const full = urlcat(process.env.NEXT_PUBLIC_APP_URL, path);
+  return full;
+}
