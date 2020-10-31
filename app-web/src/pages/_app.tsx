@@ -16,6 +16,11 @@ export default function App({ Component, pageProps }) {
         <main>
           <Component {...pageProps} />
         </main>
+        <footer>
+          <a href="https://www.vecteezy.com/vector-art/172167-prawns-vector">
+            Thank you sunshine-91! ❤️
+          </a>
+        </footer>
       </div>
     </Provider>
   );
