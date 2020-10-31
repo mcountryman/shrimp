@@ -26,7 +26,6 @@ async fn main() -> std::io::Result<()> {
 
   let state = Arc::new(AppState::new(opts.clone()).await.unwrap());
   let port = opts.port;
-  let web_url = opts.web_url;
 
   HttpServer::new(move || {
     App::new()

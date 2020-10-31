@@ -3,8 +3,6 @@ use bb8_redis::{redis, RedisPool};
 use rand::{thread_rng, Rng};
 use regex::Regex;
 
-use crate::opts::AppOpts;
-
 use super::{
   error::ShortenErr, validate::validate_scheme, URL_CHARACTERS, URL_IDEAL_LENGTH,
   URL_IDEAL_RETRIES, URL_KEY,

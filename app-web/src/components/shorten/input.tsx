@@ -1,71 +1,39 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useCopyToClipboard } from "react-use";
+import { shorten } from "../../features/shorten/actions";
+import { ShortenState } from "../../features/shorten/state";
+import { useAppSelector } from "../../features/store";
 import ShortenButton from "./button";
-import ShortenTextBox from "./textbox";
 // @ts-ignore
 import styles from "./input.less";
-import urlcat from "urlcat";
+import ShortenTextBox from "./textbox";
 
 export default function ShortenInput() {
   const [long, setLong] = useState("");
-  const [short, setShort] = useState("");
-  const [error, setError] = useState(null);
-  const [isShort, setIsShort] = useState(false);
+  const state = useAppSelector((state) => state.shorten.state);
+  const short = useAppSelector((state) => state.shorten.short);
+  const dispatch = useDispatch();
+  const [, copy] = useCopyToClipboard();
 
   return (
     <form
-      onSubmit={evt => {
+      className={styles.container}
+      onSubmit={(evt) => {
         evt.preventDefault();
 
-        shorten(long)
-          .then(short => {
-            setLong("");
-            setShort(short);
-            setIsShort(true);
-          })
-          .catch(ex => {
-            setError(ex);
-            setIsShort(false);
-          });
+        if (state === ShortenState.Ready) {
+          dispatch(shorten(long.trim()));
+        }
       }}
-      className={styles.container}
     >
       <ShortenTextBox
-        long={long}
-        short={short}
-        isShort={isShort}
-        onChange={long => {
-          setLong(long);
-          setIsShort(false);
-        }}
+        value={state === ShortenState.Shortened ? short : long}
+        message={short}
+        onChange={setLong}
       />
 
-      <ShortenButton
-        link={long}
-        isShort={isShort}
-        onClick={() => console.log("Test")}
-      />
+      <ShortenButton onClick={() => copy(short)} />
     </form>
   );
-}
-
-async function shorten(link: string) {
-  if (link.length === 0) {
-    throw new Error("Invalid");
-  }
-
-  const res = await fetch(urlcat(process.env.NEXT_PUBLIC_APP_URL, "api/shorten"), {
-    body: JSON.stringify({ url: link }),
-    mode: "cors",
-    method: "PUT",
-    headers: { "Content-Type": "application/json" }
-  });
-
-  if (!res.ok) {
-    throw new Error(await res.text());
-  }
-
-
-  const path = await res.text();
-  const full = urlcat(process.env.NEXT_PUBLIC_APP_URL, path);
-  return full;
 }

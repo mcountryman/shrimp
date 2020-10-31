@@ -1,3 +1,4 @@
+import { SerializedError } from "@reduxjs/toolkit";
 
 export enum ShortenState {
   Ready,
@@ -8,12 +9,6 @@ export enum ShortenState {
 export interface IShortenState {
   state: ShortenState,
 
-  long?: string,
   short?: string,
-  error?: Error,
+  error?: SerializedError,
 }
-
-export const defaultShortenState: IShortenState = {
-  long: "",
-  state: ShortenState.Ready,
-};

@@ -1,15 +1,15 @@
 import React, { createRef } from "react";
-import urlcat from "urlcat";
+import { ShortenState } from "../../features/shorten/state";
+import { useAppSelector } from "../../features/store";
 // @ts-ignore
 import styles from "./input.less";
 
 interface IShortenButtonProps {
-  link: string,
-  isShort: boolean,
-  onClick: () => void,
+  onClick: () => void;
 }
 
 export default function ShortenButton(props: IShortenButtonProps) {
+  const state = useAppSelector((state) => state.shorten.state);
   const anchor = createRef<HTMLButtonElement>();
 
   return (
@@ -17,10 +17,14 @@ export default function ShortenButton(props: IShortenButtonProps) {
       <button
         ref={anchor}
         type="submit"
-        onClick={props.onClick}
+        onClick={() => {
+          if (state === ShortenState.Shortened) {
+            props.onClick();
+          }
+        }}
         className={styles.button}
       >
-        {props.isShort ? "copy to clipboard" : "shorten"}
+        {state === ShortenState.Shortened ? "copy to clipboard" : "shorten"}
       </button>
     </>
   );

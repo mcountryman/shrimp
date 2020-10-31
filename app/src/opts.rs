@@ -15,26 +15,23 @@ impl AppOpts {
   pub fn parse() -> Self {
     dotenv().ok();
 
+    let port = "8080".to_string();
+
     Self {
       port: env::var("PORT")
-        .unwrap_or("8080".to_owned())
+        .unwrap_or(port)
         .parse()
         .expect("Invalid `PORT` environment variable."),
 
-      web_url: env::var("WEB_URL")
-        .expect("Missing `WEB_URL` environment variable.")
-        .to_owned(),
+      web_url: env::var("WEB_URL").expect("Missing `WEB_URL` environment variable."),
 
       app_url: env::var("NEXT_PUBLIC_APP_URL")
-        .expect("Missing `NEXT_PUBLIC_APP_URL` environment variable.")
-        .to_owned(),
+        .expect("Missing `NEXT_PUBLIC_APP_URL` environment variable."),
 
-      redis_url: env::var("REDIS_URL")
-        .expect("Missing `REDIS_URL` environment variable.")
-        .to_owned(),
+      redis_url: env::var("REDIS_URL").expect("Missing `REDIS_URL` environment variable."),
 
       valid_scheme: Regex::new(
-        &env::var("VALID_SCHEME").expect("Missing `VALID_SCHEMES` environment variable."),
+        &env::var("VALID_SCHEME").expect("Missing `VALID_SCHEME` environment variable."),
       )
       .expect("Invalid regex in environment variable `VALID_SCHEMES`."),
     }
